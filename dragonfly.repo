@@ -1,0 +1,6 @@
+[dragonfly]
+name=Dragonfly Packages
+baseurl=http://127.0.0.1:8000/packages
+enabled=1
+gpgcheck=1
+gpgkey=http://127.0.0.1:8000/pgp-key.public
