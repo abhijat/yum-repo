@@ -1,26 +1,29 @@
-name: directory-listing
-on: workflow_dispatch
+name: generate-site
+on: [ push ]
 
 jobs:
-  pages-directory-listing:
+  gen-site:
     runs-on: ubuntu-latest
-    name: Directory Listings Index
+    name: Generate index and site assets
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Generate Directory Listings
-        uses: jayanta525/github-pages-directory-listing@v4.0.0
-        with:
-          FOLDER: rpm
+        run: |
+          python scripts/generate-index.py
+
+      - name: Prepare assets
+        run: |
+          mkdir _site
+          cp -aRv rpm _site/
+          cp -aRv pgp-key.public index.html _site/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3.0.1
-        with:
-          path: 'rpm'
-  
+
   deploy:
-    needs: pages-directory-listing
+    needs: gen-site
     permissions:
       pages: write
       id-token: write
