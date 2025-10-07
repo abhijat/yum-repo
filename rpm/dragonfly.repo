@@ -1,6 +1,6 @@
 [dragonfly]
 name=Dragonfly Packages
-baseurl=https://abhijat.io/yum-repo/packages/
+baseurl=https://abhijat.io/yum-repo/rpm/packages/
 enabled=1
 gpgcheck=1
 gpgkey=https://abhijat.io/yum-repo/pgp-key.public
