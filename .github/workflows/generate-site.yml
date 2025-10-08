@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install RPM tools
-        run: sudo apt install -y rpm gpg
+        run: sudo apt install -y rpm gpg createrepo-c
 
       - name: Setup requirements
         run: pip install -r requirements.txt
@@ -28,6 +28,14 @@ jobs:
       - name: Sign RPMs
         shell: sh
         run: sh scripts/sign-rpms.sh ${{ steps.gpg-import.outputs.fingerprint }}
+
+      - name: Create YUM repository
+        shell: sh
+        run: createrepo_c -v _site/rpm
+
+      - name: Sign YUM repository
+        shell: sh
+        run: gpg --armor --detach-sign _site/rpm/repodata/repomd.xml
 
       - name: Generate Directory Listings
         run: python scripts/generate-index.py
