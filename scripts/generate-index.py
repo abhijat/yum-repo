@@ -25,7 +25,6 @@ def build_index(dirpath):
         for item in sorted(os.listdir(dirpath)):
             if any(item in x for x in SKIP):
                 continue
-            print(f"{item=}")
             name = item + "/" if os.path.isdir(os.path.join(dirpath, item)) else item
             f.write(f"""<a href="{item}">{name}</a><br>\n""")
         f.write(FOOTER)

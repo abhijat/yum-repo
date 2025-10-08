@@ -4,19 +4,36 @@ on: [ push ]
 jobs:
   gen-site:
     runs-on: ubuntu-latest
+
     name: Generate index and site assets
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Install RPM tools
+        run: sudo apt install -y rpm gpg
+
+      - name: Setup requirements
+        run: pip install -r requirements.txt
+
+      - name: Download packages
+        run: python scripts/fetch-releases.py
+
+      - name: Import GPG key
+        id: gpg-import
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+
+      - name: Sign RPMs
+        shell: sh
+        run: sh scripts/sign-rpms.sh ${{ steps.gpg-import.outputs.fingerprint }}
+
       - name: Generate Directory Listings
-        run: |
-          python scripts/generate-index.py
+        run: python scripts/generate-index.py
 
       - name: Prepare assets
         run: |
-          mkdir _site
-          cp -aRv rpm _site/
           cp -aRv pgp-key.public index.html _site/
 
       - name: Upload artifact
