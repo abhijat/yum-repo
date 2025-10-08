@@ -16,6 +16,8 @@ def build_index(dirpath):
     with open(target, 'w') as f:
         f.write(HEADER.format(dir=dirpath))
         for item in sorted(os.listdir(dirpath)):
+            if item == "index.html":
+                continue
             name = item + "/" if os.path.isdir(os.path.join(dirpath, item)) else item
             f.write(f"""<a href="{item}">{name}</a><br>\n""")
         f.write(FOOTER)

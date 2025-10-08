@@ -39,7 +39,7 @@ jobs:
 
       - name: Prepare assets
         run: |
-          cp -aRv pgp-key.public _site/
+          cp -aRv dragonfly.repo pgp-key.public _site/
 
       - name: Generate Directory Listings
         run: python scripts/generate-index.py
