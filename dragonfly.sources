@@ -1,0 +1,5 @@
+Types: deb
+URIs: http://abhijat.io/yum-repo/deb
+Suites: noble
+Components: main
+Signed-By: /usr/share/keyrings/dragonfly-keyring.public
