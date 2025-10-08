@@ -37,12 +37,12 @@ jobs:
         shell: sh
         run: gpg --armor --detach-sign _site/rpm/repodata/repomd.xml
 
-      - name: Generate Directory Listings
-        run: python scripts/generate-index.py
-
       - name: Prepare assets
         run: |
-          cp -aRv pgp-key.public index.html _site/
+          cp -aRv pgp-key.public _site/
+
+      - name: Generate Directory Listings
+        run: python scripts/generate-index.py
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3.0.1
